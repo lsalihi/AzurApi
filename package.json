@@ -1,10 +1,10 @@
 {
   "name": "webhook-azur",
   "version": "1.0.0",
-  "description": "Webhook pour transport servce de Provence-Alpes-Côte d'Azur",
+  "description": "API REST AZUR",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node server.js"
   },
   "author": "SALIHI LYAZID",
   "dependencies": {
