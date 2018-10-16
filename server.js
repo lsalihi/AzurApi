@@ -77,6 +77,11 @@ var initDb = function(callback) {
     dbDetails.type = 'MongoDB';
 
     console.log('Connected to MongoDB at: %s', mongoURL);
+	
+		  // mongoose instance connection url connection
+	   console.log("mongoose connexion...");
+	   mongoose.Promise = global.Promise;
+	   mongoose.connect(mongoURL); 
   });
 };
 
