@@ -1,14 +1,13 @@
+//  OpenShift sample Node application
 var express = require('express'),
-  app = express(),
-  port = process.env.PORT || 8000,
-  mongoose = require('mongoose'),
-  Task = require('./api/models/todoListModel'), //created model loading here
-  bodyParser = require('body-parser'),
-  morgan  = require('morgan');
-
-      
+    app     = express(),
+	Task = require('./api/models/todoListModel'), //created model loading here
+    morgan  = require('morgan'),
+	mongoose = require('mongoose');
+    
 Object.assign=require('object-assign')
 
+app.engine('html', require('ejs').renderFile);
 app.use(morgan('combined'))
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
@@ -16,8 +15,6 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
 
-  
-// mongoose instance connection url connection
 if (mongoURL == null) {
   var mongoHost, mongoPort, mongoDatabase, mongoPassword, mongoUser;
   // If using plane old env vars via service discovery
@@ -28,7 +25,6 @@ if (mongoURL == null) {
     mongoDatabase = process.env[mongoServiceName + '_DATABASE'];
     mongoPassword = process.env[mongoServiceName + '_PASSWORD'];
     mongoUser = process.env[mongoServiceName + '_USER'];
-	console.log(mongoHost,  mongoPort, mongoDatabase, mongoPassword, mongoUser);
 
   // If using env vars from secret from service binding  
   } else if (process.env.database_name) {
@@ -53,6 +49,11 @@ if (mongoURL == null) {
     // Provide UI label that excludes user id and pw
     mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
     mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
+  }else{
+	  // mongoose instance connection url connection
+	  console.log("mongoose connexion...");
+		mongoose.Promise = global.Promise;
+		mongoose.connect('mongodb://localhost/botdb'); 
   }
 }
 var db = null,
@@ -79,9 +80,26 @@ var initDb = function(callback) {
   });
 };
 
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.get('/', function (req, res) {
+  // try to initialize the db on every request if it's not already
+  // initialized.
+  if (!db) {
+    initDb(function(err){});
+  }
+  if (db) {
+    var col = db.collection('counts');
+    // Create a document with request IP and current time of request
+    col.insert({ip: req.ip, date: Date.now()});
+    col.count(function(err, count){
+      if (err) {
+        console.log('Error running count. Message:\n'+err);
+      }
+      res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
+    });
+  } else {
+    res.render('index.html', { pageCountMessage : null});
+  }
+});
 
 app.get('/pagecount', function (req, res) {
   // try to initialize the db on every request if it's not already
@@ -101,9 +119,6 @@ app.get('/pagecount', function (req, res) {
 var routes = require('./api/routes/todoListRoutes'); //importing route
 routes(app); //register the route
 
-
-//app.listen(port);
-
 // error handling
 app.use(function(err, req, res, next){
   console.error(err.stack);
@@ -118,7 +133,3 @@ app.listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
 
 module.exports = app ;
-
-console.log('todo list RESTful API server started on: ' + port);
-
-//
