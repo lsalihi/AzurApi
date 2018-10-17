@@ -1,3 +1,3 @@
 
 
-- [Node.js Api Rest on OpenShift!] base on https://github.com/sclorg/nodejs-ex
+- [Node.js Api Rest depolyed on OpenShift!] based on https://github.com/sclorg/nodejs-ex
