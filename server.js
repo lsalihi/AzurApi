@@ -1,14 +1,28 @@
 //  OpenShift sample Node application
 var express = require('express'),
     app     = express(),
-	Task = require('./api/models/todoListModel'), //created model loading here
+	  Task = require('./api/models/todoListModel'), //created model loading here
     morgan  = require('morgan'),
-	mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    //favicon = require('serve-favicon'),
+    session = require('express-session'),
+    bodyParser = require('body-parser'),
+    errorHandler = require('errorhandler');
     
 Object.assign=require('object-assign')
 
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 app.engine('html', require('ejs').renderFile);
-app.use(morgan('combined'))
+app.use(morgan('combined'));
+// parse application/json
+app.use(bodyParser.json());                       
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
@@ -78,7 +92,7 @@ var initDb = function(callback) {
 
     console.log('Connected to MongoDB at: %s', mongoURL);
 	
-		  // mongoose instance connection url connection
+		// mongoose instance connection url connection
 	   console.log("mongoose connexion...");
 	   mongoose.Promise = global.Promise;
 	   mongoose.connect(mongoURL); 
@@ -88,6 +102,7 @@ var initDb = function(callback) {
 app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
+  console.log('home page .. %s', req.body);
   if (!db) {
     initDb(function(err){});
   }
@@ -109,6 +124,7 @@ app.get('/', function (req, res) {
 app.get('/pagecount', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
+  console.log('page count ..');
   if (!db) {
     initDb(function(err){});
   }
