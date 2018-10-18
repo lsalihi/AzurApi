@@ -1,7 +1,15 @@
 //  OpenShift sample Node application
 var express = require('express'),
     app     = express(),
-	  Task = require('./api/models/todoListModel'), //created model loading here
+    Task = require('./api/models/todoListModel'), //created model loading here
+    Agency = require('./api/models/agencyModel'),
+    CalendarDate = require('./api/models/calendarDateModel'),
+    Calendar = require('./api/models/calendarModel'),
+    Route = require('./api/models/routeModel'),
+    Stop = require('./api/models/stopModel'),
+    StopTime = require('./api/models/stopTimeModel'),
+    Transfert = require('./api/models/transfertModel'),
+    Trip = require('./api/models/tripModel'),
     morgan  = require('morgan'),
     mongoose = require('mongoose'),
     //favicon = require('serve-favicon'),
@@ -138,7 +146,9 @@ app.get('/pagecount', function (req, res) {
 });
 
 var routes = require('./api/routes/todoListRoutes'); //importing route
+var routesInsert = require('./api/routes/insertRoutes'); //importing route
 routes(app); //register the route
+routesInsert(app);
 
 // error handling
 app.use(function(err, req, res, next){

@@ -1,0 +1,240 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Swagger Petstore"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:
+- name: "pet"
+  description: "Everything about your Pets"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+- name: "store"
+  description: "Access to Petstore orders"
+- name: "user"
+  description: "Operations about user"
+  externalDocs:
+    description: "Find out more about our store"
+    url: "http://swagger.io"
+schemes:
+- "https"
+- "http"
+paths:
+  /agence/findByStatus:
+    get:
+      tags:
+      - "agence"
+      summary: "Finds Agences by status"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "findAgencesByStatus"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "status"
+        in: "query"
+        description: "Status values that need to be considered for filter"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "available"
+          - "pending"
+          - "sold"
+          default: "available"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Agency"
+        400:
+          description: "Invalid status value"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Agency:
+    type: "object"
+    properties:
+      agency_id:
+        type: "integer"
+        format: "int64"
+      agency_name:
+        type: "string"
+      agency_url:
+        type: "string"
+      agency_timezone:
+        type: "string"
+      agency_lang:
+        type: "string"
+      agency_phone:
+        type: "string"
+    xml:
+      name: "Agence"
+  Calendar:
+    type: "object"
+    properties:
+      service_id:
+        type: "string"
+      start_date:
+        type: "string"
+      end_date:
+        type: "string"
+      monday:
+        type: "boolean"
+        default: false
+      tuesday:
+        type: "boolean"
+        default: false
+      wednesday:
+        type: "boolean"
+        default: false
+      thursday:
+        type: "boolean"
+        default: false
+      friday:
+        type: "boolean"
+        default: false
+      saturday:
+        type: "boolean"
+        default: false
+      sunday:
+        type: "boolean"
+        default: false
+    xml:
+      name: "Calendrier"
+  CalendarDate:
+    type: "object"
+    properties:
+      service_id:
+        type: "integer"
+        format: "int64"
+      date:
+        type: "string"
+      exception_type:
+        type: "string"
+    xml:
+      name: "CalendarDate"
+  Route:
+    type: "object"
+    properties:
+      route_id:
+        type: "string"
+      agency_id:
+        type: "integer"
+        format: "int64"
+      route_short_name:
+        type: "string"
+      route_long_name:
+        type: "string"
+      route_type:
+        type: "string"
+    xml:
+      name: "Route"
+  StopTime:
+      type: object
+      properties:
+        trip_id: 
+          type: "string"
+        arrival_time:
+          type: "string"
+        departure_time:
+          type: "string"
+        stop_id:
+          type: "string"
+        stop_sequence:
+          type: "string"
+        pickup_type:
+          type: "string"
+        drop_off_type:
+          type: "string"
+      xml:
+        name: "StopTime"
+  Stop:
+      type: object
+      properties:
+        stop_id:
+          type: "string"
+        stop_code:
+          type: "string"
+        stop_name:
+          type: "string"
+        stop_lat:
+          type: "string"
+        stop_lon:
+          type: "string"
+        location_type:
+          type: "string"
+      xml:
+        name: "Stop"
+  Trip:
+      type: object
+      properties:
+        route_id:
+          type: "string"
+        service_id:
+          type: "string"
+        trip_id:
+          type: "string"
+        trip_headsign:
+          type: "string"
+        direction_id:
+          type: "string"
+        block_id:
+          type: "string"
+        wheelchair_accessible:
+          type: "string"
+        bikes_allowed:
+          type: "string"
+      xml:
+        name: "Trip"
+  Transfert:
+      type: object
+      properties:
+        from_stop_id:
+          type: "string"
+        to_stop_id:
+          type: "string"
+        transfer_type:
+          type: "string"
+        min_transfer_time:
+          type: "string"
+      xml:
+        name: "Transfert"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
