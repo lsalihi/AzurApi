@@ -75,7 +75,7 @@ if (mongoURL == null) {
 	  // mongoose instance connection url connection
 	  console.log("mongoose connexion...");
 		mongoose.Promise = global.Promise;
-		mongoose.connect('mongodb://localhost/botdb'); 
+		mongoose.connect('mongodb://localhost/botdb', { useNewUrlParser: true }); 
   }
 }
 var db = null,
@@ -103,7 +103,7 @@ var initDb = function(callback) {
 		// mongoose instance connection url connection
 	   console.log("mongoose connexion...");
 	   mongoose.Promise = global.Promise;
-	   mongoose.connect(mongoURL); 
+	   mongoose.connect(mongoURL, { useNewUrlParser: true }); 
   });
 };
 
