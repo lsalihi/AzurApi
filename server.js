@@ -1,8 +1,7 @@
 //  OpenShift sample Node application
 var express = require('express'),
     app     = express(),
-    Task = require('./api/models/todoListModel'), //created model loading here
-    Agency = require('./api/models/agencyModel'),
+    Agency = require('./api/models/agencyModel'),//created model loading here
     CalendarDate = require('./api/models/calendarDateModel'),
     Calendar = require('./api/models/calendarModel'),
     Route = require('./api/models/routeModel'),
@@ -10,12 +9,12 @@ var express = require('express'),
     StopTime = require('./api/models/stopTimeModel'),
     Transfert = require('./api/models/transfertModel'),
     Trip = require('./api/models/tripModel'),
-    morgan  = require('morgan'),
+    //morgan  = require('morgan'),
     mongoose = require('mongoose'),
     //favicon = require('serve-favicon'),
-    session = require('express-session'),
-    bodyParser = require('body-parser'),
-    errorHandler = require('errorhandler');
+    //session = require('express-session'),
+    bodyParser = require('body-parser');
+    //errorHandler = require('errorhandler');
     
 Object.assign=require('object-assign')
 
@@ -24,7 +23,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.engine('html', require('ejs').renderFile);
-app.use(morgan('combined'));
+//app.use(morgan('combined'));
 // parse application/json
 app.use(bodyParser.json());                       
 // parse application/x-www-form-urlencoded
@@ -145,10 +144,9 @@ app.get('/pagecount', function (req, res) {
   }
 });
 
-var routes = require('./api/routes/todoListRoutes'); //importing route
-var routesInsert = require('./api/routes/insertRoutes'); //importing route
+var routes = require('./api/routes/insertRoutes'); //importing route
 routes(app); //register the route
-routesInsert(app);
+
 
 // error handling
 app.use(function(err, req, res, next){
