@@ -4,19 +4,19 @@
   "description": "Node.js ApiRest deployed on OpenShift",
   "main": "server.js",
   "dependencies": {
+    "body-parser": "1.8",
     "chai": "^3.5.0",
-    "chai-http": "^2.0.1",
+    "chai-http": "^4.2.0",
     "ejs": "^2.4.1",
+    "errorhandler": "*",
     "express": "^4.16.4",
-    "mocha": "^2.4.5",
+    "express-session": "*",
+    "method-override": "*",
+    "mocha": "^5.2.0",
     "mongodb": "^2.1.16",
     "mongoose": "^5.3.4",
     "morgan": "^1.7.0",
-    "object-assign": "4.1.0",
-    "method-override": "*",
-    "body-parser": "1.8",
-    "errorhandler": "*",
-    "express-session": "*"
+    "object-assign": "4.1.0"
   },
   "engine": {
     "node": "*",
