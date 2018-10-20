@@ -9,12 +9,12 @@ var express = require('express'),
     StopTime = require('./api/models/stopTimeModel'),
     Transfert = require('./api/models/transfertModel'),
     Trip = require('./api/models/tripModel'),
-    //morgan  = require('morgan'),
+    morgan  = require('morgan'),
     mongoose = require('mongoose'),
     //favicon = require('serve-favicon'),
-    //session = require('express-session'),
-    bodyParser = require('body-parser');
-    //errorHandler = require('errorhandler');
+    session = require('express-session'),
+    bodyParser = require('body-parser'),
+    errorHandler = require('errorhandler');
     
 Object.assign=require('object-assign')
 
@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
-    mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
+    mongoURL = 'mongodb+srv://mongo:mongo@azurcluster-x5wtm.mongodb.net/botdb',//process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
 
 if (mongoURL == null) {
@@ -70,12 +70,14 @@ if (mongoURL == null) {
     // Provide UI label that excludes user id and pw
     mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
     mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
-  }else{
+  }
+  /*else{
 	  // mongoose instance connection url connection
 	  console.log("mongoose connexion...");
 		mongoose.Promise = global.Promise;
-		mongoose.connect('mongodb://localhost/botdb', { useNewUrlParser: true }); 
-  }
+		mongoose.connect(mongoURL, { useNewUrlParser: true }); 
+		console.log("Done !...");
+  }*/
 }
 var db = null,
     dbDetails = new Object();
@@ -100,7 +102,7 @@ var initDb = function(callback) {
     console.log('Connected to MongoDB at: %s', mongoURL);
 	
 		// mongoose instance connection url connection
-	   console.log("mongoose connexion...");
+	   //console.log("mongoose connexion...");
 	   mongoose.Promise = global.Promise;
 	   mongoose.connect(mongoURL, { useNewUrlParser: true }); 
   });
