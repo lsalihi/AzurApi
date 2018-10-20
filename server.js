@@ -2,14 +2,14 @@
 require('app-module-path').addPath(__dirname + 'azurapi');
 var express = require('express'),
     app     = express(),
-    Agency = require('./api/models/agencyModel'),//created model loading here
-    CalendarDate = require('./api/models/calendarDateModel'),
-    Calendar = require('./api/models/calendarModel'),
-    Route = require('./api/models/routeModel'),
-    Stop = require('./api/models/stopModel'),
-    StopTime = require('./api/models/stopTimeModel'),
-    Transfert = require('./api/models/transfertModel'),
-    Trip = require('./api/models/tripModel'),
+    Agency = require('./api/models/AgencyModel'),//created model loading here
+    CalendarDate = require('./api/models/CalendarDateModel'),
+    Calendar = require('./api/models/CalendarModel'),
+    Route = require('./api/models/RouteModel'),
+    Stop = require('./api/models/StopModel'),
+    StopTime = require('./api/models/StopTimeModel'),
+    Transfert = require('./api/models/TransfertModel'),
+    Trip = require('./api/models/TripModel'),
     morgan  = require('morgan'),
     mongoose = require('mongoose'),
     //favicon = require('serve-favicon'),
