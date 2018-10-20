@@ -1,7 +1,7 @@
 //  OpenShift sample Node application
 var express = require('express'),
     app     = express(),
-    Agency = require('./api/models/agencyModel'),//created model loading here
+    Agency = require('./models/agencyModel'),//created model loading here
     CalendarDate = require('./api/models/calendarDateModel'),
     Calendar = require('./api/models/calendarModel'),
     Route = require('./api/models/routeModel'),
