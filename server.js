@@ -1,7 +1,8 @@
 //  OpenShift sample Node application
+require('app-module-path').addPath(__dirname + 'azurapi');
 var express = require('express'),
     app     = express(),
-    Agency = require('./models/agencyModel'),//created model loading here
+    Agency = require('./api/models/agencyModel'),//created model loading here
     CalendarDate = require('./api/models/calendarDateModel'),
     Calendar = require('./api/models/calendarModel'),
     Route = require('./api/models/routeModel'),

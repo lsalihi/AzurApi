@@ -4,6 +4,7 @@
   "description": "Node.js ApiRest deployed on OpenShift",
   "main": "server.js",
   "dependencies": {
+    "app-module-path": "^2.2.0",
     "chai": "^3.5.0",
     "chai-http": "^2.0.1",
     "ejs": "^2.4.1",

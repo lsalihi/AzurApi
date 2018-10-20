@@ -1,0 +1,14 @@
+The following service(s) have been created in your project: mongodb.
+
+       Username: userIW6
+       Password: jfNfdR2XAAURS42D
+  Database Name: botdb
+ Connection URL: mongodb://userIW6:jfNfdR2XAAURS42D@127.0.0.1:27017/botdb
+
+mongo mongodb://127.0.0.1:27017/$MONGODB_DATABASE -u $MONGODB_USER -p $MONGODB_PASSWORD
+
+
+link OKAY:
+mongo mongodb://127.0.0.1:27017/$MONGODB_DATABASE -u $MONGODB_USER -p $MONGODB_PASSWORD
+
+mongo mongodb://172.30.79.122:27017/$MONGODB_DATABASE -u $MONGODB_USER -p $MONGODB_PASSWORD
