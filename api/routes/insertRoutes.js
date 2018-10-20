@@ -60,10 +60,8 @@ module.exports = function(app) {
       .get(calendarController.list_all_calendars)
       .post(calendarController.create_a_calendar);
     
-      var calendarDateController = require('../controllers/calendarDateController');
-    
-      // -- Routes
-     app.route('/calendarDates')
+    var calendarDateController = require('../controllers/calendrierDateController');
+    app.route('/calendarDates')
         .get(calendarDateController.list_all_calendarDates)
         .post(calendarDateController.create_a_calendarDate);
     
